@@ -14,14 +14,26 @@ export default class PokemonFetcher extends Component {
     }
 
     // lifecycle component method
-    async componentDidMount(){
-        // Generate a random Pokemon ID Number
-        let randomNumber = Math.ceil(Math.random() * 1025);
-        // Pass random Pokemon Number to fetch
-        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomNumber}`);
-        let data = await response.json();
-        // Set fetch response data to state
-        this.setState({pokemonList: [data.name]});
+    async componentDidMount() {
+        // for loop to fetch 6 Pokemon
+        for (let index = 0; index < 6; index++) {
+            // Generate a random Pokemon ID Number
+            let randomNumber = Math.ceil(Math.random() * 1025);
+            // Pass random Pokemon Number to fetch
+            let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomNumber}`);
+            let data = await response.json();
+            // Set fetch response data to state
+            // Method 1:
+            // this.setState({ pokemonList: [...this.state.pokemonList, data.name] });
+            
+            // Method 2 (best method):
+            this.setState((previousState) => {
+                return {
+                    pokemonList: [...previousState.pokemonList, data.name]
+                }
+            })
+        }
+        console.log("Pokemon Fetcher first load on the page")
     }
 
     render() {
@@ -32,7 +44,7 @@ export default class PokemonFetcher extends Component {
                     return <PokemonCard name={pokemon} />;
                 })}
                 <button onClick={() => {
-                    this.setState({pokemonList: []});
+                    this.setState({ pokemonList: [] });
                 }}>Empty the state</button>
             </div>
         );
