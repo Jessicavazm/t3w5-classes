@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import React, { Component } from "react";
+import PokemonFetcher from "./PokemonFetcher";
 
 // create a class App
 // React.Component or Component you need to add this every time you create a class
@@ -9,6 +10,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <PokemonFetcher />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
